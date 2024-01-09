@@ -20,3 +20,7 @@ Pandas
 Numpy
 Seaborn
 Matplotlib
+
+An article elaborating on the findings is on the below link
+
+https://medium.com/@mkaudi/analysis-on-the-expected-years-of-schooling-eys-metric-globally-14a94821606c
