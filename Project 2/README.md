@@ -10,21 +10,30 @@ The project includes the below files:
 
 - Datasets:
   - messages.csv
-    - Contains the 
+    - Contains the list of the original messages as well as the english translations.
+  - categories.csv
+    - Contains the categories and they are marked either 0 or 1, depending on whether the category applies.
 - Jupyter notebooks:
-  - ML Pipeline:
+  - ETL Pipeline:
     - Reads in the dataset which consists of 2 files, messages and categories, and combines into a single
     dataset. It further goes on to clean the dataset and creates an SQL database from the dataset.
   - ML Pipeline:
     - Reads in the Database created in the ETL pipeline. It then tokenizes the text by removing punctuations and stop words,
       and converts all to lower case. The data then gets split into the training and testing sets and run through a ML model,
       the model is then tuned through GridSearch and results output. The model is then exported to a pickle file.
+- Python scripts
+  - process_data.py:
+    - Contains the code from the jupyter notebook for ETL pipeline.
+    - To run: _"python python process_data.py 'messages.csv categories.csv DisasterResponse.db"_
+  - train_classifier.py:
+    - Contains the code from the jupyter notebook for ML Pipeline.
+    - To run: _"python train_classifier.py ../data/DisasterResponse.db model.pkl"_
+  - run.py:
+    - This is the Flask web app that provides the interface for the user to enter the message and will highlight the 
+      related categories using the built 
+      pipelines.
 
-- Flask Web App:
-  - Provides the interface for the user to enter the message and will highlight the related categories using the built 
-    pipelines.
-
-Libraries used:
+**Libraries used:**
 sys
 Pandas
 Scikit-learn
@@ -42,18 +51,8 @@ Below the snips of the app.
 
 ![img_1.png](img_1.png)
 
-The dataset was acquired from kaggle, https://www.kaggle.com/datasets/iamsouravbanerjee/years-of-schooling-worldwide
 
 **Acknowledgement**
 
-This Dataset is created from Human Development Reports. This Dataset falls under the Creative Commons Attribution 3.0 IGO License. 
+This Dataset was acquired from Udacity for the purpose of this project.
 
-**Libraries used:
-Pandas
-Numpy
-Seaborn
-Matplotlib
-
-An article elaborating on the findings is on the below link
-
-https://medium.com/@mkaudi/analysis-on-the-expected-years-of-schooling-eys-metric-globally-14a94821606c
