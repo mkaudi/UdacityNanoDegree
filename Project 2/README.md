@@ -40,11 +40,17 @@ Pandas
 Scikit-learn
 
 sqlalchemy
+
 re
+
 nltk
+
 pickle
+
 json
+
 plotly
+
 flask
 
 Below the snips of the app.
