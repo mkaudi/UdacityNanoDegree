@@ -2,6 +2,7 @@
 
 import sys
 import nltk
+from nltk.stem.porter import PorterStemmer
 from sqlalchemy import create_engine
 import pandas as pd
 import re
@@ -27,8 +28,8 @@ def load_data(database_filepath):
     """
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table("Messages", engine)
-    X = df.message.values
-    Y = df[df.columns[4:]].values
+    X = df['message']
+    Y = df.drop(columns=['id', 'message', 'original', 'genre'])
     cols = df[df.columns[4:]].columns
 
     return X, Y, cols
@@ -36,10 +37,10 @@ def load_data(database_filepath):
 def tokenize(text):
     """
     The functions takes text as input and tokenizes it by removing punctuations, converting all letters to lower case,
-    removing the stop words and tokenizing it.
+    removing the stop words and reducing it to its stems.
 
-    :param text: the text to be tokenized
-    :return: tokenized text that is lower case, no punctuation and stopwords.
+    :param text: the text to be tokenized.
+    :return: tokenized text .
     """
     # Remove punctuation characters
     text = re.sub(r"[^a-zA-Z0-9]", " ", str(text))
@@ -53,10 +54,13 @@ def tokenize(text):
     # tokenize
     words = word_tokenize(text)
 
-   #remove stopwords
+    # #remove stopwords
     words = [w for w in words if w not in stopwords.words("english")]
 
-    return words
+    # reduce words to their stems
+    stemmed = [PorterStemmer().stem(w) for w in words]
+
+    return stemmed
 
 
 def build_model():
@@ -68,22 +72,17 @@ def build_model():
     :return: ML model pipeline that has been tuned with GridSearch
     """
     pipeline = Pipeline([
-        ('features', FeatureUnion([
-
-            ('text_pipeline', Pipeline([
-                ('vect', CountVectorizer(tokenizer=tokenize)),
-                ('tfidf', TfidfTransformer())
-            ]))
-        ])),
-
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
 
+    #Tuning the model with GridSearchCV
     parameters = {
         'clf__estimator__n_estimators': [50, 100]
     }
 
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=3)
 
     return cv
 
@@ -99,15 +98,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
     """
 
     Y_pred= model.predict(X_test)
-    accuracy = (Y_pred == Y_test).mean()
-    # print("Confusion Matrix:\n", confusion_mat)
-    print("Accuracy:", accuracy)
-
     i = 0
     for col in category_names:
-        report = classification_report(Y_test[i], Y_pred[i])
+        report = classification_report(Y_test[col], Y_pred[:, i])
         print(f"Classification report for column '{col}':\n{report}\n")
         i += 1
+
+    accuracy = (Y_pred == Y_test).mean()
+    print("Accuracy:", accuracy)
 
 
 def save_model(model, model_filepath):
