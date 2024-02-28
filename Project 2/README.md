@@ -34,8 +34,11 @@ The project includes the below files:
 
 **Libraries used:**
 sys
+
 Pandas
+
 Scikit-learn
+
 sqlalchemy
 re
 nltk
