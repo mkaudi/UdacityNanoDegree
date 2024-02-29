@@ -36,6 +36,7 @@ The project includes the below files:
       related categories using the built pipelines.
 
 **Libraries used:**
+
 sys
 
 Pandas
