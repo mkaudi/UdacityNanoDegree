@@ -1,5 +1,8 @@
 **Disaster Response Pipeline**
 
+The code is uploaded onto Github. Follow the below link to access it:
+https://github.com/mkaudi/UdacityNanoDegree/tree/5931b04abacdeb1ef7c381c9e425a3a9e280e0a9/Project%202
+
 The project entails creating a machine learning pipeline to categorize messages during disaster events and send them to
 the relevant people.
 
@@ -34,14 +37,23 @@ The project includes the below files:
 
 **Libraries used:**
 sys
+
 Pandas
+
 Scikit-learn
+
 sqlalchemy
+
 re
+
 nltk
+
 pickle
+
 json
+
 plotly
+
 flask
 
 Below the snips of the app.

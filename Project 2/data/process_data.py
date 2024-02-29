@@ -44,6 +44,7 @@ def load_data(messages_filepath, categories_filepath):
 
     return df
 
+
 def clean_data(df):
     """
     the function clean the dataframe as it readies it to be output to the database.
@@ -51,7 +52,12 @@ def clean_data(df):
     :param df: the dataframe containing the messages with the categories.
     :return: a cleaned dataframe with no duplicates.
     """
+    # remove the duplicated rows
     df.drop_duplicates(inplace=True)
+
+    # replace the 2's with 1's
+    df[df['related'] == 2] = 1
+
     return df
 
 
@@ -65,7 +71,6 @@ def save_data(df, database_filename):
     """
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql('Messages', engine, if_exists='replace', index=False)
-
 
 
 def main():
