@@ -9718,7 +9718,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [77]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">user_user_recs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">#check the 2 top recommendations for user 1</span>
@@ -9732,9 +9732,9 @@ dtype: object</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[77]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>['1014.0', '1000.0']</pre>
+<pre>['1000.0', '1014.0']</pre>
 </div>
 </div>
 </div>
@@ -9771,7 +9771,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [78]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check Results</span>
@@ -9786,7 +9786,7 @@ dtype: object</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[78]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[41]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>['analyze energy consumption in buildings',
  'analyze accident reports on amazon emr spark',
@@ -9944,38 +9944,25 @@ dtype: object</pre>
     
     
     <span class="c1">#iterate through the users</span>
-<span class="w">    </span><span class="sd">'''for j in close_users['neighbor_id']:</span>
-<span class="sd">        new_recs = np.setdiff1d(get_user_articles(j)[0], get_user_articles(user_id)[0], assume_unique=True) </span>
-
-<span class="sd">        # Sorting recommendations based on article popularity/interaction count</span>
-<span class="sd">        new_recs_float = list(map(float, new_recs))</span>
-<span class="sd">        recs_to_add = article_interactions.loc[new_recs_float].sort_values(ascending=False)</span>
-
-<span class="sd">        for i in recs_to_add:</span>
-<span class="sd">            recs.add(i)</span>
-<span class="sd">            if len(recs) == m: #if we reach the maximum required we stop</span>
-<span class="sd">                        target = True</span>
-<span class="sd">                        break</span>
-<span class="sd">        if target:</span>
-<span class="sd">            break'''</span>
-
-
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">close_users</span><span class="p">[</span><span class="s1">'neighbor_id'</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span> <span class="c1">#go through the articles adding them to the recommendation list using the neighbour dataframe</span>
-            <span class="n">rec_list</span> <span class="o">=</span> <span class="n">get_user_articles</span><span class="p">(</span><span class="n">j</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#get the articles for the closest neighbour</span>
-            <span class="n">rec_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-            
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">rec_list</span><span class="p">:</span> <span class="c1">#go through the articles and if the user hasnt seen them, add them to the list</span>
-                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_articles</span><span class="p">:</span>           
-                    <span class="n">recs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span> <span class="c1">#if we reach the maximum required we stop</span>
+        <span class="n">new_recs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">get_user_articles</span><span class="p">(</span><span class="n">j</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">get_user_articles</span><span class="p">(</span><span class="n">user_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+
+        <span class="c1"># Sorting recommendations based on article popularity/interaction count</span>
+        <span class="n">new_recs_float</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">new_recs</span><span class="p">))</span>
+        <span class="n">recs_to_add</span> <span class="o">=</span> <span class="n">article_interactions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_recs_float</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1">#iterate through the articles and add the top m articles</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">recs_to_add</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">recs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span> <span class="c1">#if we reach the maximum required we stop</span>
                         <span class="n">target</span> <span class="o">=</span> <span class="kc">True</span>
                         <span class="k">break</span>
-            <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
-                <span class="k">break</span>
         <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
-                <span class="k">break</span>
+            <span class="k">break</span>
+    
     <span class="n">recs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">recs</span><span class="p">))</span>
+
+    <span class="c1">#get the article names</span>
     <span class="n">rec_names</span> <span class="o">=</span> <span class="n">get_article_names</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">recs</span><span class="p">,</span> <span class="n">rec_names</span>
@@ -10131,10 +10118,10 @@ dtype: object</pre>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The top 10 recommendations for user 20 are the following article ids:
-['1150.0', '1160.0', '1152.0', '1151.0', '1085.0', '1024.0', '1153.0', '1157.0', '1154.0', '109.0']
+['1368.0', '1351.0', '1160.0', '1162.0', '1354.0', '1330.0', '1427.0', '1364.0', '1170.0', '1304.0']
 
 The top 10 recommendations for user 20 are the following article names:
-['airbnb data for analytics: washington d.c. listings', 'analyze accident reports on amazon emr spark', 'tensorflow quick tips', 'airbnb data for analytics: venice listings', 'airbnb data for analytics: venice calendar', 'airbnb data for analytics: venice reviews', 'using deep learning to reconstruct high-resolution audio', 'airbnb data for analytics: vienna listings', 'airbnb data for analytics: vienna calendar', 'airbnb data for analytics: chicago listings']
+['apache spark lab, part 1: basic concepts', 'predicting churn with the spss random tree algorithm', 'analyze energy consumption in buildings', 'use xgboost, scikit-learn &amp; ibm watson machine learning apis', 'putting a human face on machine learning', 'gosales transactions for logistic regression model', 'insights from new york car accident reports', 'model bike sharing data with spss', 'analyze accident reports on amazon emr spark', 'movie recommender system with spark machine learning']
 </pre>
 </div>
 </div>
@@ -10862,13 +10849,13 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\mkaud\AppData\Local\Temp\ipykernel_18920\2793482322.py:16: SettingWithCopyWarning: 
+<pre>C:\Users\mkaud\AppData\Local\Temp\ipykernel_26404\2793482322.py:16: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df['interacted'] = 1
-C:\Users\mkaud\AppData\Local\Temp\ipykernel_18920\2793482322.py:16: SettingWithCopyWarning: 
+C:\Users\mkaud\AppData\Local\Temp\ipykernel_26404\2793482322.py:16: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
