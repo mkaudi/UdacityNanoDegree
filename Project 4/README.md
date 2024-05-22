@@ -6,16 +6,19 @@ PySpark libraries were utilized for this project as it is effecient for dealing 
 
 
 **Running the code**:
+
 To run the code, firstly start by unzipping/uncompressing the dataset file, **mini_sparkify_event_data.rar** ans saving it in the same directory as the notebook **Sparkify.ipynb**.
 From thereon, the notebook can be run as normal.
 To access the dataset in this repository, kinldy note that you will need to unzip/uncompress the **mini_sparkify_event_data.rar** file.
 
 **Files**:
+
 	- Sparkify.ipynb 
  	- Sparkify.html
   	- mini_sparkify_event_data.rar
  
 **The project includes the below major parts**:	
+
 	- Data import and cleaning
 	- Data exploration
 	- Feature Engineering
@@ -23,6 +26,7 @@ To access the dataset in this repository, kinldy note that you will need to unzi
 	- Machine learning modeling
 
 **Libraries used**:
+
 	- pyspark
  		- pyspark.sql
    		- pyspark.ml
@@ -32,6 +36,7 @@ To access the dataset in this repository, kinldy note that you will need to unzi
 	- seaborn
 
 **Acknowledgement**:
+
 
 the dataset was provided by Udacity as part of the training and appreciations go out ot he team for the effort, knowledge and skills they shared.
 
